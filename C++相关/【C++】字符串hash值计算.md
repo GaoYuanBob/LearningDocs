@@ -15,7 +15,7 @@
 &emsp;&emsp;再跳到 **_Fnv1a_append_bytes**。
 <div align=center><img src="https://img-blog.csdnimg.cn/2019082215533424.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0JvYl9feXVhbg==,size_16,color_FFFFFF,t_70" WIDTH = "70%"></div>
 
-&emsp;&emsp;**就是这里了！**这里的返回值就是 hash 值，这个函数也很简单，就是从前到后遍历这个传入的参数，对每一位，先转换为 size_t，然后和 _Val 进行异或（注意 _Val 传入就是 **_FNV_offset_basis**），然后 **_Val *= _FNV_prime;**。也就是传入的是 string 的话，对每个字符，转换成 size_t（应该就是 ascii 码），异或，乘一个常量，循环。 <font color=red>**重点就是下边这两句**</font>：
+&emsp;&emsp;**就是这里了！** 这里的返回值就是 hash 值，这个函数也很简单，就是从前到后遍历这个传入的参数，对每一位，先转换为 size_t，然后和 _Val 进行异或（注意 _Val 传入就是 **_FNV_offset_basis**），然后 **_Val *= _FNV_prime;**。也就是传入的是 string 的话，对每个字符，转换成 size_t（应该就是 ascii 码），异或，乘一个常量，循环。 <font color=red>**重点就是下边这两句**</font>：
 ```cpp
 	_Val ^= static_cast<size_t>(_First[_Idx]);
 	_Val *= _FNV_prime;
@@ -64,8 +64,7 @@ val2 = 440920331
 ```cpp
 // 以下定义于 <stl_hash_fun.h>
 template <class Key> struct hash { };
-inline size_t __stl_hash_string(const char* s)
-{
+inline size_t __stl_hash_string(const char* s) {
 	unsigned long h = 0;
 	for ( ; *s; ++s)
 		h = 5 * h + *s;
