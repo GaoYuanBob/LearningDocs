@@ -51,7 +51,7 @@ int main() {
 int main() {
 	A* pa = new A[5]{ A(1), A(2), A(3), A(4), A(5) };
 	printf("\n对象个数: %d\n", *(pa - 1));
-	*reinterpret_cast<int*>(pa - 1) = 3;	// *((int*)(pa - 1)) = 2; 也行
+	*reinterpret_cast<int*>(pa - 1) = 3;	// *((int*)(pa - 1)) = 3; 也行
 	delete[] pa;
 }
 ```
