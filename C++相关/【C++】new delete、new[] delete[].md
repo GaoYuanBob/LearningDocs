@@ -41,8 +41,8 @@ int main() {
 
 &emsp;&emsp;<font color=red>**3、为什么析构顺序是反着的？**</font>
 
-#### 一、delete[] 怎么知道数组有多大的？
-##### 1.1 C++有析构函数的对象
+### 一、delete[] 怎么知道数组有多大的？
+#### 1.1 C++有析构函数的对象
 &emsp;&emsp;还是上边的代码，进入调试，可以看到 operator new[] 返回的确实是 **void*** 类型，pa 则是 **A*** 类型。
 <div align=center><img src="https://img-blog.csdnimg.cn/20190903151619441.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0JvYl9feXVhbg==,size_16,color_FFFFFF,t_70" WIDTH = "60%"></div>
 
@@ -68,7 +68,7 @@ int main() {
 > 释放 id 为 1 的对象
 
 &emsp;&emsp;**这个输出很重要！** 说明 delete[] 确实是根据数组指针前 4 个字节存储的数据作为对象个数的记录的，<font color=red>**这就解释了为什么 delete[] 不需要传入参数**</font>。
-##### 1.2 基础类型或者没有析构函数的类型
+#### 1.2 基础类型或者没有析构函数的类型
 &emsp;&emsp;对于基础类型，没有析构函数，或者编译器会优化的类型，就不会有这个记录对象个数的值存在：
 ```cpp
 int main() {
@@ -80,7 +80,7 @@ int main() {
 &emsp;&emsp;而且 delete a; 和 delete[] a; 也都不会崩。
 &emsp;&emsp;<font color=red>**上边的类 A 中，如果把析构函数注释掉，也不会有对象个数的记录**</font>，会输出一个随机值。
 &emsp;&emsp;但是还是应该保持 new[] 和 delete[] 的配对原则使用。
-#### 二、如果不配对使用，new[] 之后用 delete 会怎么样？
+### 二、如果不配对使用，new[] 之后用 delete 会怎么样？
 ```cpp
 int main() {
 	A* pa = new A[5]{ A(1), A(2), A(3), A(4), A(5) };
@@ -107,7 +107,7 @@ int main() {
 &emsp;&emsp;也不可以 new 之后 delete[]，总之一句话，<font color=red>**new 配 delete，new[] 配 delete[]**</font>。
 &emsp;&emsp;所以面试时，如果问到如果 new[] 了之后 delete，会有什么问题，不能只回答剩下的部分不会被调用析构函数，因为可能还会导致程序崩溃（之前我就是答的内存泄漏这个问题，然后他问我还有什么问题，我就蒙了 = =）。
 
-#### 三、为什么析构顺序是反着的？
+### 三、为什么析构顺序是反着的？
 &emsp;&emsp;没有看到官方的、靠谱的解释，可能就是 C++ 的规定，很多构造和析构都是先构造的后析构，类似栈的感觉，比如继承关系中：
 ```cpp
 class A {
