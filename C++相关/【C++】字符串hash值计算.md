@@ -52,10 +52,10 @@ int main(){
 }
 ```
 &emsp;&emsp;结果如下：
-> hash<string>()('a') = 3826002220
-hash<string>()("a") = 3826002220
-hash<string>()("abc") = 440920331
-val1 = 3826002220
+> hash<string>()('a') = 3826002220\
+hash<string>()("a") = 3826002220\
+hash<string>()("abc") = 440920331\
+val1 = 3826002220\
 val2 = 440920331
 
 &emsp;&emsp;说明 string 的 hash 值确实是这么计算的，字符也是这么处理，就相当于是长度为 1 的字符串。
