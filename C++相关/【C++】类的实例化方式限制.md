@@ -6,7 +6,7 @@
 class A {
 protected:	// ***
 	void* operator new(size_t) { return nullptr; };	// 函数的第一个参数与返回值类型是固定的
-	void operator delete(void*) { };				// 重载了new，就要重载delete
+	void operator delete(void*) { };		// 重载了new，就要重载delete
 
 	void* operator new[](size_t) { return nullptr; };
 	void operator delete[](void*) { };
@@ -15,7 +15,7 @@ protected:	// ***
 int main() {
 	A *a1 = new A;		// not ok, A::operator new   不可访问
 	A *a2 = new A[];	// not ok, A::operator new[] 不可访问
-	A a3;				// ok
+	A a3;			// ok
 }
 ```
 
