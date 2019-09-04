@@ -4,9 +4,7 @@
 
 ```cpp
 class A {
-public:
-
-protected:
+protected:	// ***
 	void* operator new(size_t) { return nullptr; };	// 函数的第一个参数与返回值类型是固定的
 	void operator delete(void*) { };				// 重载了new，就要重载delete
 
