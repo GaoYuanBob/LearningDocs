@@ -2,7 +2,7 @@
 用来记录学习笔记，以及一些找工作的笔记
 
 分为以下几个部分内容：
-* **C++相关**
+* [**C++相关**](https://github.com/GaoYuanBob/LearningDocs/tree/master/C%2B%2B%E7%9B%B8%E5%85%B3)
 * **常见数据结构**
   * 哈希表
   * 红黑树

@@ -1,4 +1,4 @@
-&emsp;&emsp;C++ 中，new、delete 和 sizeof 一样，都**不是函数**，都是<font color=red>**操作符**</font>。面试经常回问 malloc/free 和 new/delete的区别和联系：
+C++ 中，new、delete 和 sizeof 一样，都**不是函数**，都是<font color=red>**操作符**</font>。面试经常会问 malloc/free 和 new/delete的区别和联系：
 *  malloc/free 只是动态分配内存空间/释放空间，new/delete 除了分配空间还会调用**构造函数**和**析构函数**进行初始化与清理
 *  它们都是动态管理内存的入口
 *  malloc/free 是 C/C++ 标准库的函数，new/delete 是 C++ 操作符
@@ -25,18 +25,22 @@ int main() {
 }
 ```
 &emsp;&emsp;上边代码输出如下：
-> 构造 id 为 1 的对象
-> 构造 id 为 2 的对象
-> 构造 id 为 3 的对象
+> 构造 id 为 1 的对象\
+> 构造 id 为 2 的对象\
+> 构造 id 为 3 的对象\
 > \
-> 释放 id 为 3 的对象
-> 释放 id 为 2 的对象
+> 释放 id 为 3 的对象\
+> 释放 id 为 2 的对象\
 > 释放 id 为 1 的对象
 
-&emsp;&emsp;可以看到这是正常的构造和析构过程，这就引发了两个问题：
+&emsp;&emsp;可以看到这是正常的构造和析构过程，这就引发了以下三个问题：
+
 &emsp;&emsp;<font color=red>**1、delete[] 是怎么知道数组有多大的？**</font>
+
 &emsp;&emsp;<font color=red>**2、如果不配对，new[] 之后用 delete 会怎么样？**</font>
+
 &emsp;&emsp;<font color=red>**3、为什么析构顺序是反着的？**</font>
+
 #### 一、delete[] 怎么知道数组有多大的？
 ##### 1.1 C++有析构函数的对象
 &emsp;&emsp;还是上边的代码，进入调试，可以看到 operator new[] 返回的确实是 **void*** 类型，pa 则是 **A*** 类型。
@@ -52,15 +56,15 @@ int main() {
 }
 ```
 &emsp;&emsp;输出如下：
-> 构造 id 为 1 的对象
-> 构造 id 为 2 的对象
-> 构造 id 为 3 的对象
-> 构造 id 为 4 的对象
-> 构造 id 为 5 的对象
+> 构造 id 为 1 的对象\
+> 构造 id 为 2 的对象\
+> 构造 id 为 3 的对象\
+> 构造 id 为 4 的对象\
+> 构造 id 为 5 的对象\
 > \
-> 对象个数: 5
-> 释放 id 为 3 的对象
-> 释放 id 为 2 的对象
+> 对象个数: 5\
+> 释放 id 为 3 的对象\
+> 释放 id 为 2 的对象\
 > 释放 id 为 1 的对象
 
 &emsp;&emsp;**这个输出很重要！** 说明 delete[] 确实是根据数组指针前 4 个字节存储的数据作为对象个数的记录的，<font color=red>**这就解释了为什么 delete[] 不需要传入参数**</font>。
@@ -84,19 +88,22 @@ int main() {
 }
 ```
 &emsp;&emsp;比如上边这样的代码，运行起来，会输出：
-> 构造 id 为 1 的对象
-> 构造 id 为 2 的对象
-> 构造 id 为 3 的对象
-> 构造 id 为 4 的对象
-> 构造 id 为 5 的对象
+> 构造 id 为 1 的对象\
+> 构造 id 为 2 的对象\
+> 构造 id 为 3 的对象\
+> 构造 id 为 4 的对象\
+> 构造 id 为 5 的对象\
 > 释放 id 为 1 的对象
 
 &emsp;&emsp;然后崩掉，提示下图：
 <div align=center><img src="https://img-blog.csdnimg.cn/20190903160253258.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0JvYl9feXVhbg==,size_16,color_FFFFFF,t_70" WIDTH = "35%"></div>
 
 &emsp;&emsp;所以可以看到，new[] 构造出对象数组，但是只用 delete 去释放的话，会有两个问题：
+
 &emsp;&emsp;<font color=red>**1、只会对第一个对象的调用析构函数，其他对象的内存不会释放**</font>
+
 &emsp;&emsp;<font color=red>**2、更严重的是，有时候会直接崩掉**</font>
+
 &emsp;&emsp;也不可以 new 之后 delete[]，总之一句话，<font color=red>**new 配 delete，new[] 配 delete[]**</font>。
 &emsp;&emsp;所以面试时，如果问到如果 new[] 了之后 delete，会有什么问题，不能只回答剩下的部分不会被调用析构函数，因为可能还会导致程序崩溃（之前我就是答的内存泄漏这个问题，然后他问我还有什么问题，我就蒙了 = =）。
 
@@ -121,9 +128,9 @@ int main() {
 }
 ```
 &emsp;&emsp;输出：
-> 构造 A 的对象
-> 构造 B 的对象
-> 释放 B 的对象
+> 构造 A 的对象\
+> 构造 B 的对象\
+> 释放 B 的对象\
 > 释放 A 的对象
 
 &emsp;&emsp;肯定还是不太一样，如果有大神可以讲解一下，将万分感谢！！！！
