@@ -1,4 +1,4 @@
-&emsp;&emsp;C++ 中 explicit 关键字用于指定类的构造函数或转换函数为<font color=red>**显式**</font>，即它不能用于<font color=red>**隐式转换**</font>和<font color=red>**复制初始化**</font>。
+&emsp;&emsp;C++ 中 explicit 关键字用于指定类的构造函数或转换函数为<font color=red>**显式**</font>，即它不能用于<font color=red>**隐式转换**</font>和<font color=red>**复制初始化**</font>。\
 &emsp;&emsp;**C++ 11前**，声明时不带函数说明符 explicit 的拥有**单个无默认值形参的构造函数**被称作**转换构造函数**。就是可以直接转换，比如 A(int) {} 那么 A a = 1; 是可以自动转换的，C++ 11后，多个无默认参数的可以这么转换了，如下：
 ```cpp
 class A {
