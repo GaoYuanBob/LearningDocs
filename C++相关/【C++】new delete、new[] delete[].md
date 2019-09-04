@@ -1,4 +1,4 @@
-&emsp;&emsp;C++ 中，new、delete 和 sizeof 一样，都**不是函数**，都是<font color=red>**操作符**</font>。面试经常回问 malloc/free 和 new/delete的区别和联系：
+C++ 中，new、delete 和 sizeof 一样，都**不是函数**，都是<font color=red>**操作符**</font>。面试经常会问 malloc/free 和 new/delete的区别和联系：
 *  malloc/free 只是动态分配内存空间/释放空间，new/delete 除了分配空间还会调用**构造函数**和**析构函数**进行初始化与清理
 *  它们都是动态管理内存的入口
 *  malloc/free 是 C/C++ 标准库的函数，new/delete 是 C++ 操作符
