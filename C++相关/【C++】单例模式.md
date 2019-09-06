@@ -4,7 +4,7 @@
 &emsp;&emsp;2、使用类的私有静态变量表示类的唯一实例\
 &emsp;&emsp;3、使用一个公有的静态方法获取该实例
 
-&emsp;&emsp;分为懒汉版（**Lazy Singleton**）和懒汉版（**Eager Singleton**）：
+&emsp;&emsp;分为懒汉版（**Lazy Singleton**）和饿汉版（**Eager Singleton**）：
 ### 一、懒汉版（Lazy Singleton）
 &emsp;&emsp;单例实例在第一次被使用时才进行初始化，这叫做<font color=red>**延迟初始化**</font>。
 
